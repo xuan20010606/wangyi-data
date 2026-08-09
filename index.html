@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>王奕数据组 · 数据小课堂</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    background: #FFF5EE;
+    color: #333;
+    font-size: 15px;
+    line-height: 1.6;
+    padding-bottom: 40px;
+  }
+
+  /* Header */
+  .header {
+    background: #FFF5EE;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .logo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8456D, #C2185B);
+  }
+  .logo-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: #E8456D;
+    flex: 1;
+  }
+  .logo-text span { color: #C2185B; }
+  .search-box {
+    flex: 1;
+    background: #fff;
+    border-radius: 20px;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #999;
+    border: 1px solid #f0e0d6;
+    max-width: 280px;
+  }
+  .search-icon { font-size: 14px; }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    padding: 10px 16px 0;
+    font-size: 13px;
+    color: #999;
+    display: none;
+  }
+  .breadcrumb a { color: #E8456D; text-decoration: none; }
+  .breadcrumb.active { display: block; }
+
+  /* Container */
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  /* Hero Card */
+  .hero-card {
+    background: linear-gradient(135deg, #FCE4EC 0%, #F3E5F5 100%);
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #f8bbd0;
+  }
+  .hero-card h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 10px;
+  }
+  .hero-card p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.7;
+  }
+
+  /* Module List (Home) */
+  .module-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: transform 0.15s;
+    border: 1px solid #f0e0d6;
+  }
+  .module-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  .module-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .icon-orange { background: linear-gradient(135deg, #FF9800, #F57C00); }
+  .icon-red { background: linear-gradient(135deg, #E8456D, #C2185B); }
+  .icon-purple { background: linear-gradient(135deg, #9C6ADE, #7B4FB8); }
+  .icon-pink { background: linear-gradient(135deg, #F48FB1, #E8456D); }
+  .icon-violet { background: linear-gradient(135deg, #BA68C8, #8E44AD); }
+  .icon-deeporange { background: linear-gradient(135deg, #FF8A65, #E64A19); }
+
+  .module-info { flex: 1; min-width: 0; }
+  .module-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 4px;
+  }
+  .module-desc {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.5;
+  }
+  .module-arrow {
+    color: #ccc;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .module-card.active-highlight {
+    border: 2px solid #F8BBD9;
+    background: #FFF0F5;
+  }
+
+  /* Detail Page */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .detail-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .detail-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #222;
+  }
+  .detail-intro {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .tag-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    background: #FFF0F5;
+    color: #E8456D;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+  }
+  .tag-purple { background: #F3E5F5; color: #9C6ADE; }
+  .tag-orange { background: #FFF3E0; color: #F57C00; }
+
+  /* Section */
+  .section {
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon { font-size: 18px; }
+
+  /* Info Box */
+  .info-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    border-left: 4px solid #E8456D;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .info-box-purple { border-left-color: #9C6ADE; }
+  .info-box-orange { border-left-color: #F57C00; }
+
+  /* Step Cards */
+  .step-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid #f5e6dc;
+  }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8456D, #C2185B);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step-num-purple { background: linear-gradient(135deg, #9C6ADE, #7B4FB8); }
+  .step-num-orange { background: linear-gradient(135deg, #FF9800, #F57C00); }
+  .step-content h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 3px;
+  }
+  .step-content p {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.5;
+  }
+
+  /* Copy Area */
+  .copy-group {
+    margin-bottom: 10px;
+  }
+  .copy-item-header {
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid #f5e6dc;
+  }
+  .copy-item-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .copy-item-tag {
+    background: #FF9800;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .copy-item-tag.red { background: #E8456D; }
+  .copy-item-tag.purple { background: #9C6ADE; }
+  .copy-item-tag.pink { background: #F48FB1; }
+  .copy-item-tag.violet { background: #BA68C8; }
+  .copy-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+  }
+  .copy-item-arrow { color: #999; font-size: 14px; }
+  .copy-item-body {
+    background: #FFF5EE;
+    border-radius: 0 0 10px 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    display: block;
+  }
+
+  /* Warning / Tips */
+  .tip-card {
+    background: #FFFDE7;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    border: 1px solid #FFF176;
+  }
+  .tip-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .tip-text {
+    font-size: 13px;
+    color: #5D4037;
+    line-height: 1.6;
+  }
+  .tip-card.danger {
+    background: #FFEBEE;
+    border-color: #FFCDD2;
+  }
+  .tip-card.danger .tip-text { color: #C62828; }
+
+  /* FAQ */
+  .faq-item {
+    background: #FFF0F5;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .faq-q {
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #444;
+    font-size: 13px;
+  }
+  .faq-q-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: #9C6ADE;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .faq-a {
+    padding: 0 14px 12px 46px;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    display: none;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* Tips Section (碎碎念) */
+  .murmur-card {
+    background: linear-gradient(135deg, #F3E5F5, #E8EAF6);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    color: #512DA8;
+    line-height: 1.6;
+  }
+  .murmur-icon { flex-shrink: 0; color: #9C6ADE; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #bbb;
+  }
+
+  /* Back button */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #E8456D;
+    font-size: 13px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    padding: 4px 0;
+  }
+  .back-btn:hover { opacity: 0.8; }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #f0e0d6, transparent);
+    margin: 16px 0;
+  }
+
+  @media (max-width: 400px) {
+    .container { padding: 12px; }
+    .hero-card { padding: 20px 16px; }
+    .hero-card h1 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo-dot"></div>
+  <div class="logo-text">王奕数据组<span> · 数据小课堂</span></div>
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <span>搜教程，比如「增评」「控评」</span>
+  </div>
+</div>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb" id="breadcrumb">
+  <a href="#" onclick="showPage('home'); return false;">首页</a> / <span id="crumb-name"></span>
+</div>
+
+<div class="container">
+
+<!-- ========== HOME PAGE ========== -->
+<div class="page active" id="page-home">
+  <div class="hero-card">
+    <h1>王奕数据组给粉丝的数据小课堂</h1>
+    <p>为方便柠檬汽水宝宝们更全面、清晰地了解数据，我们搭建了专属数据科普网站。站内整合各类科普内容，系统化梳理相关信息，可供大家自主查阅、参考学习。</p>
+  </div>
+
+  <!-- Module Cards -->
+  <div class="module-card" onclick="showPage('chaolike')">
+    <div class="module-icon icon-orange">赞</div>
+    <div class="module-info">
+      <div class="module-title">超like</div>
+      <div class="module-desc">超like是超话每日经验值任务，7天内在王奕超话获取经验值大于等于80分的用户可自动获得超like头衔，此头衔需每日坚持做任务维护，不然会掉！</div>
+    </div>
+    <div class="module-arrow">→</div>
+  </div>
+
+  <div class="module-card" onclick="showPage('kongping')">
+    <div class="module-icon icon-orange">控</div>
+    <div class="module-info">
+      <div class="module-title">控评</div>
+      <div class="module-desc">在oneone本人、记事本、合作方、yxh等发布自家相关时第一时间点赞自家评论上前排。</div>
+    </div>
+    <div class="module-arrow">→</div>
+  </div>
+
+  <div class="module-card active-highlight" onclick="showPage('zengping')">
+    <div class="module-icon icon-red">评</div>
+    <div class="module-info">
+      <div class="module-title">增评</div>
+      <div class="module-desc">增评就是对指定微博进行大量重复评论，以增加该微博的评论数量。</div>
+    </div>
+    <div class="module-arrow">→</div>
+  </div>
+
+  <div class="module-card" onclick="showPage('lunbo')">
+    <div class="module-icon icon-purple">转</div>
+    <div class="module-info">
+      <div class="module-title">轮博</div>
+      <div class="module-desc">轮博就是对同一条微博进行大量转发，目的是提升该微博的转发量，让热转区前排被自家粉丝占领，同时增加微博热度。</div>
+    </div>
+    <div class="module-arrow">→</div>
+  </div>
+
+  <div class="module-card" onclick="showPage('fatie')">
+    <div class="module-icon icon-red">帖</div>
+    <div class="module-info">
+      <div class="module-title">发帖</div>
+      <div class="module-desc">发帖是指在微博超话社区内，围绕特定主题发布符合格式规则的内容，旨在提升话题热度。</div>
+    </div>
+    <div class="module-arrow">→</div>
+  </div>
+
+  <div class="module-card" onclick="showPage('douyin')">
+    <div class="module-icon icon-red">花</div>
+    <div class="module-info">
+      <div class="module-title">抖音数据</div>
+      <div class="module-desc">抖音数据包含播放、点赞、评论、转发、粉丝等指标，用来衡量账号热度、流量规模与粉丝活跃度。</div>
+    </div>
+    <div class="module-arrow">→</div>
+  </div>
+
+  <div class="module-card" onclick="showPage('xhs')">
+    <div class="module-icon icon-violet">红</div>
+    <div class="module-info">
+      <div class="module-title">小红书数据</div>
+      <div class="module-desc">小红书数据主要有浏览量、完读情况、点赞、评论、收藏、转发，还有涨粉数据；收藏转发权重更高，完整浏览后互动效果更佳。</div>
+    </div>
+    <div class="module-arrow">→</div>
+  </div>
+
+  <div class="module-card" onclick="showPage('qiandao')">
+    <div class="module-icon icon-violet">签</div>
+    <div class="module-info">
+      <div class="module-title">超话签到</div>
+      <div class="module-desc">每日进入王奕超话主页，点击右上角「签到」标签即为签到打卡成功。</div>
+    </div>
+    <div class="module-arrow">→</div>
+  </div>
+
+  <div class="module-card" onclick="showPage('huati')">
+    <div class="module-icon icon-deeporange">话</div>
+    <div class="module-info">
+      <div class="module-title">话题建设</div>
+      <div class="module-desc">话题建设就是粉丝带词条发原创博文，产出安利、物料、感想，提升词条阅读、讨论量，优化词条氛围，拉高艺人话题热度与路人曝光。</div>
+    </div>
+    <div class="module-arrow">→</div>
+  </div>
+</div>
+
+<!-- ========== CHAOLIKE PAGE ========== -->
+<div class="page" id="page-chaolike">
+  <div class="back-btn" onclick="showPage('home')">← 返回首页</div>
+  <div class="detail-header">
+    <div class="detail-icon icon-orange">赞</div>
+    <div class="detail-title">超like</div>
+  </div>
+  <div class="detail-intro">超like是超话每日经验值任务，7天内在王奕超话获取经验值大于等于80分的用户可自动获得超like头衔，此头衔需每日坚持做任务维护，不然会掉！</div>
+  <div class="tag-row">
+    <span class="tag tag-orange">超话</span>
+    <span class="tag tag-orange">经验值</span>
+    <span class="tag tag-orange">每日任务</span>
+  </div>
+
+  <!-- 这有啥用 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>这有啥用</div>
+    <div class="info-box info-box-orange">
+      超话每天能通过做任务获取经验值，经验值攒够了能提升超话等级和排名，且超like是艺人活粉的象征，是数据中最核心的部分之一。下面是帮助大家维护超like头衔的操作，每日坚持照做即可。
+    </div>
+  </div>
+
+  <!-- 手把手教 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span>手把手教</div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">1</div>
+      <div class="step-content">
+        <h4>先签到</h4>
+        <p>每天进超话签到，拿4～8经验值。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">2</div>
+      <div class="step-content">
+        <h4>发一条帖</h4>
+        <p>发一条帖子，集满15条评论，再拿6经验值。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">3</div>
+      <div class="step-content">
+        <h4>抢4个首评</h4>
+        <p>去抢4个帖子的首评，再拿8经验值。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">4</div>
+      <div class="step-content">
+        <h4>转2条帖</h4>
+        <p>转发2条帖子，再拿2经验值。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">5</div>
+      <div class="step-content">
+        <h4>浏览10条帖</h4>
+        <p>浏览10条帖子，再拿1经验值。上限4经验值（每条帖子至少停留3s）。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 抄作业区 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>抄作业区</div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag">短评论</span>
+          <span class="copy-item-name">短评</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">oneone太好看了！这个造型绝了！</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag">长评论</span>
+          <span class="copy-item-name">长评</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">这个造型真的绝，发型妆容都很搭，舞台表现力也越来越稳了。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag">互动向</span>
+          <span class="copy-item-name">互动</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">小汽水们安利得好！我也好喜欢这个，补几张图。</div>
+    </div>
+  </div>
+
+  <!-- 避坑指南 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span>避坑指南</div>
+
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">别只发「顶」「好」这种水评，会被折叠还降低权重。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">别复制粘贴一样的评论，不同帖子发一样的会被判刷量。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">别只评论不回，别人评论你的帖记得回复，互相才有来有往。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">别带别家艺人名字，容易引战。</div>
+    </div>
+  </div>
+
+  <!-- 小汽水们问最多的 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span>小汽水们问最多的</div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        互相评论和增评有啥不一样？
+      </div>
+      <div class="faq-a">
+        增评是给oneone自己发的微博刷评论，互相评论是超话里小汽水们之间互相评论对方的帖子。增评是给正主做数据，超like是给超话帖子做数据，对象不一样。
+      </div>
+    </div>
+
+    <div class="faq-item open" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        每天评论多少合适？
+      </div>
+      <div class="faq-a">
+        没硬性规定，刷到什么评论什么就行。但别一分钟发几十条，分散开来，自然一点。
+      </div>
+    </div>
+  </div>
+
+  <!-- 超话帖互动公式 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📌</span>超话帖互动公式有哪些？</div>
+    <div class="info-box">
+      1评论+2内赞；2评论+1外赞；2评论+1内赞；2转发+1外赞；2转发+1内赞。（满足其一可产生有效热度）
+    </div>
+  </div>
+
+  <!-- 过来人碎碎念 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🌟</span>过来人碎碎念</div>
+
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>新帖发布后30分钟内有评论最关键——帮新帖度过冷启动期，别人看到有评论才愿意也来评论。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>互相回复比单向评论效果好——小汽水们评论你的帖你回复了，她下次更愿意来评论，形成正向循环。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== KONGPING PAGE ========== -->
+<div class="page" id="page-kongping">
+  <div class="back-btn" onclick="showPage('home')">← 返回首页</div>
+  <div class="detail-header">
+    <div class="detail-icon icon-orange">控</div>
+    <div class="detail-title">控评</div>
+  </div>
+  <div class="detail-intro">在oneone本人、记事本、合作方、yxh等发布自家相关时第一时间点赞自家评论上前排。</div>
+  <div class="tag-row">
+    <span class="tag tag-orange">微博</span>
+    <span class="tag tag-orange">评论区</span>
+    <span class="tag tag-orange">控评</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>这有啥用</div>
+    <div class="info-box info-box-orange">
+      及时控制舆论导向，把不利于自家的负面言论删下去；起到正向安利作用，宣传自家，扩大影响力；向各大品牌方及路人展示粉圈活粉数和活跃度。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span>手把手教</div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">1</div>
+      <div class="step-content">
+        <h4>第一时间抢占评论区</h4>
+        <p>时效很重要，评论时带图也可增加权重，相关博文出现时要第一时间占前排。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">2</div>
+      <div class="step-content">
+        <h4>切号给自家评论点赞</h4>
+        <p>在评论区寻找自己家粉丝的评论，切号点赞自家一级评论以及二级评论（楼中楼）至少五条。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">3</div>
+      <div class="step-content">
+        <h4>别回复任何评论</h4>
+        <p>不管正面还是负面都别回复，回复会增加评论权重，点赞就够了。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">4</div>
+      <div class="step-content">
+        <h4>恶意走举报</h4>
+        <p>碰到造谣人身攻击这种直接举报，别对骂别理论，选对举报理由。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>抄作业区</div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag">安利向</span>
+          <span class="copy-item-name">安利</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">从XX到XX每一步都看得到努力和进步，舞台表现力真的强。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag">情感向</span>
+          <span class="copy-item-name">情感</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">第一次看到oneone是在XX舞台，当时就被吸引了，一路追到现在。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag">细节向</span>
+          <span class="copy-item-name">细节</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">注意看第二段副歌的表情管理，从内敛到爆发的情绪层次处理得很好。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span>避坑指南</div>
+
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">千万别对骂别拉踩别家，控评是引导不是攻击，对骂被截图传播反而败好感。</div>
+    </div>
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">别回复任何评论！回复会增加评论权重帮它上升，点赞就够了，一律不回复。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">大小号别用一样的文案，IP也别一样，容易被看出来。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">话术别千篇一律，全一样的评论会被折叠。</div>
+    </div>
+  </div>
+
+  <!-- 避坑补充（替换原简略版） -->
+  <div class="section">
+    <div class="step-card">
+      <div class="step-num">①</div>
+      <div class="step-content">
+        <p>不和黑粉、负面评论对线争吵，不要在负面评论底下争执；只进行举报即可。</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">②</div>
+      <div class="step-content">
+        <p>多多给其他粉丝的正向评论点赞拉高内赞，优质评论内赞越高排名越靠前。</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">③</div>
+      <div class="step-content">
+        <p>楼中楼有严格加权门槛：账号为会员、铁粉等级、阳光信用分达标、回复文案大于15个字。普通小号的二级回复只会带来副作用。</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">④</div>
+      <div class="step-content">
+        <p>不要反复删除、重发评论，频繁删除操作会降低账号权重，后续留言很难展示前排。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span>小汽水们问最多的</div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        热评区被负面占了咋办？
+      </div>
+      <div class="faq-a">
+        不要在负面评论下争辩对线。集中点赞优质正向评论，短时内将正向评论推上热评第一，同时再点赞其余正面评论守住2-5名。
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        大小号控评要注意啥？
+      </div>
+      <div class="faq-a">
+        权重优秀的大号撰写走心长评、带图评论；权重较差的小号禁止参与前排控评，仅用来点赞他人评论即可。
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🌟</span>过来人碎碎念</div>
+
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>时效很重要，先关注再评论，评论时带图也可增加权重，相关博文出现时要第一时间占前排。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>内外赞都要点，外赞就是点赞博文，内赞是点赞自家评论，一次可以点内赞自家15条评论，转发评论可以增加权重。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ZENGPING PAGE ========== -->
+<div class="page" id="page-zengping">
+  <div class="back-btn" onclick="showPage('home')">← 返回首页</div>
+  <div class="detail-header">
+    <div class="detail-icon icon-red">评</div>
+    <div class="detail-title">增评</div>
+  </div>
+  <div class="detail-intro">增评就是对指定微博进行大量重复评论，以增加该微博的评论数量。</div>
+  <div class="tag-row">
+    <span class="tag">微博</span>
+    <span class="tag">评论</span>
+    <span class="tag">互动</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>这有啥用</div>
+    <div class="info-box">
+      它是与轮博（转发）、点赞并列的微博三大基础数据之一，能直观反映粉丝活跃度和艺人商业价值。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span>手把手教</div>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>选择博文</h4>
+        <p>选择要进行增评的微博，增评任务的目标一般是王奕本人，有其他目标时动力室会另外说明。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>发评论</h4>
+        <p>使用账号先在目标微博下发一条原创评论（建议15字以上）。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>盖楼及点赞</h4>
+        <p>在自己这条评论下进行「楼中楼」回复（盖楼），每条回复内容需不同（可加表情包或数字），并给每条评论点内赞。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>切小号重复操作</h4>
+        <p>每条小号一轮可评论10~20条左右，频繁后需切换账号或等待冷却（通常30分钟至1小时）。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>抄作业区</div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">走心向</span>
+          <span class="copy-item-name">走心</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">看完这个舞台真的被震到了，从练习室版本到最终舞台完全不一样，能看出来练了多少遍。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">安利向</span>
+          <span class="copy-item-name">安利</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">副歌部分太上头了循环第三天还在哼，声线辨识度真的高，推荐去看完整版。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">情感向</span>
+          <span class="copy-item-name">情感</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">从在团一路追到现在，每一步都不容易，能走到今天靠的是实力和坚持。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span>避坑指南</div>
+
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">避免使用完全相同的控评词或复制评论，否则易被平台判定为低质同质评论。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">楼中楼评论不要在前排热门评论下进行，否则可能降低该评论权重。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">频繁操作会导致账号进入小黑屋，需间隔一段时间再继续。</div>
+    </div>
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">增评号与轮博号最好分开使用，避免一个账号同时做多种操作导致炸号。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span>小汽水们问最多的</div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        为什么要增评？
+      </div>
+      <div class="faq-a">
+        增评可以直接提升微博的流量和平台推荐权重，是衡量艺人圈粉实力的重要标准。
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🌟</span>过来人碎碎念</div>
+
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>有条件的粉丝可使用自动化工具批量操作，但需注意账号安全。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>蓝V或企业号只能手动增评，无法使用自动化软件。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== LUNBO PAGE ========== -->
+<div class="page" id="page-lunbo">
+  <div class="back-btn" onclick="showPage('home')">← 返回首页</div>
+  <div class="detail-header">
+    <div class="detail-icon icon-purple">转</div>
+    <div class="detail-title">轮博</div>
+  </div>
+  <div class="detail-intro">轮博就是对同一条微博进行大量转发，目的是提升该微博的转发量，让热转区前排被自家粉丝占领，同时增加微博热度。</div>
+  <div class="tag-row">
+    <span class="tag tag-purple">微博</span>
+    <span class="tag tag-purple">转发</span>
+    <span class="tag tag-purple">传播</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>这有啥用</div>
+    <div class="info-box info-box-purple">
+      转发量能够直观反映艺人粉丝数量及活跃度，是品牌方衡量人气和商业价值的重要数据；在维权、屠yxh热转时尤其需要有效转发来加权重。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span>手把手教</div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">1</div>
+      <div class="step-content">
+        <h4>选择博文</h4>
+        <p>选择要进行轮转的微博，轮博任务的目标一般是王奕本人，有其他目标时动力室会另外说明。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">2</div>
+      <div class="step-content">
+        <h4>准备账号</h4>
+        <p>准备一个大号和多个小号，用小号转发自己大号的微博转发。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">3</div>
+      <div class="step-content">
+        <h4>具体操作</h4>
+        <p>拿大号转发一条指定要轮的博文，接着拿小号去批量转发大号的那条转发微博。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">4</div>
+      <div class="step-content">
+        <h4>检查转发</h4>
+        <p>如果大号能收到小号转发的艾特那就是有效转，反之为无效转。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>抄作业区</div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag purple">标准</span>
+          <span class="copy-item-name">标准</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">一起来看oneone的新舞台，副歌太抓耳了，推荐大家去看完整版。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag purple">话题</span>
+          <span class="copy-item-name">话题</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">#王奕# 循环第三天还是上头，声线辨识度太高了。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag purple">互动</span>
+          <span class="copy-item-name">互动</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">听完这首大家都说上头，小汽水们觉得最抓人的是哪句？</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span>避坑指南</div>
+
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">切号时记得开飞行模式，否则频繁切容易伤号。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">轮博号需平日多发原创帖，多和蓝v互动养号，否则易伤号。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">转发弹出验证时，一次两次可以继续，还继续弹出验证的话就停下来放一天。</div>
+    </div>
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">一定要拿有效转轮博，转发区能够显示但大号收不到艾特的话仍为无效转。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span>小汽水们问最多的</div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        成品轮博号的要求有什么？
+      </div>
+      <div class="faq-a">
+        ①粉丝数≥510；②关注尽量>35；③轮博号与大号不要互关。
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        为轮博开了新号该怎么做？
+      </div>
+      <div class="faq-a">
+        刚注册的新号要放置一周什么也别做，包括换头像和昵称，一周后开始慢慢发原创、跟蓝v互动。
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🌟</span>过来人碎碎念</div>
+
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>有条件的粉丝可使用自动化工具（如捞捞、星粉通）批量操作，但需注意账号安全。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>粉丝<500的轮博号能转30条以上就可以尝试买粉，买完后大概率能转更多。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FATIE PAGE ========== -->
+<div class="page" id="page-fatie">
+  <div class="back-btn" onclick="showPage('home')">← 返回首页</div>
+  <div class="detail-header">
+    <div class="detail-icon icon-red">帖</div>
+    <div class="detail-title">发帖</div>
+  </div>
+  <div class="detail-intro">发帖是指在微博超话社区内，围绕特定主题发布符合格式规则的内容，旨在提升话题热度。</div>
+  <div class="tag-row">
+    <span class="tag">超话</span>
+    <span class="tag">发帖</span>
+    <span class="tag">安利</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>这有啥用</div>
+    <div class="info-box">
+      发帖是超话热度的重要组成部分，每天的新帖数量是衡量超话活跃度的核心指标，发帖量越高，超话热度就越高，越容易在榜单上获得靠前位置，从而吸引更多新粉关注。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span>手把手教</div>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>找到发帖入口</h4>
+        <p>必须从超话主页点击「我来发一帖」，在超话内部发布帖子，个人主页直接带话题不算数据。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>发帖格式</h4>
+        <p>首行采用「王奕超话+表情/符号+话题」格式，接着空一行后写≥15字文案，再空一行@正主，最后再配图/视频。（双词条中间也要加表情/符号）</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>版块选择</h4>
+        <p>发帖前需在超话内选择对应版块（如超Link专区、汽水乐园等），水帖最好发到汽水乐园专区，否则可能被屏蔽。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>抄作业区</div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">安利帖</span>
+          <span class="copy-item-name">安利</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">今天安利oneone的XX舞台，副歌部分绝了，看完循环了一整天。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">观后感</span>
+          <span class="copy-item-name">观后感</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">看oneone今天的日常太可爱了笑死，排练花絮也太好看了，截图几张名场面。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">图文帖</span>
+          <span class="copy-item-name">图文</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">高清图+一段走心文案+#王奕#话题标签，简单但有效。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span>避坑指南</div>
+
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">超话发帖要求正文文案字数≥15字。（其中不含标点、表情和话题）</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">发帖需配上至少一张图片或视频，纯文字帖容易被判定为无效水帖。</div>
+    </div>
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">单个帖子最多带2个话题。带3个话题时，第3个不计入超话贡献度。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span>小汽水们问最多的</div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        如何有效评论他人帖子？
+      </div>
+      <div class="faq-a">
+        评论他人帖子时，文案尽量要超过十五个字，避免纯表情回复。
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        评论帖子时要注意些什么？
+      </div>
+      <div class="faq-a">
+        多多去评论超话里那些0回复的正确格式的帖子，增加互动！
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🌟</span>过来人碎碎念</div>
+
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>搜狗输入法闪光语录中搜索王奕一键发帖，保存后即可自动生成符合格式的文案并发送，省去手动排版。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>勾选「同步到微博」，能多蹭点阅读量哦！</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== DOUYIN PAGE ========== -->
+<div class="page" id="page-douyin">
+  <div class="back-btn" onclick="showPage('home')">← 返回首页</div>
+  <div class="detail-header">
+    <div class="detail-icon icon-red">花</div>
+    <div class="detail-title">抖音数据</div>
+  </div>
+  <div class="detail-intro">抖音数据包含播放、点赞、评论、转发、粉丝等指标，用来衡量账号热度、流量规模与粉丝活跃度。</div>
+  <div class="tag-row">
+    <span class="tag">抖音</span>
+    <span class="tag">直播</span>
+    <span class="tag">送花</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>这有啥用</div>
+    <div class="info-box">
+      抖音视频的互动量越高越容易被推上热门，曝光随之上涨；直播间的点赞、人气票和弹幕能增加直播间热度，平台会推送更多流量给到直播间。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span>手把手教</div>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>视频互动</h4>
+        <p>oneone发抖音视频后需要点赞、评论、转发加送花一键四连，前2小时的互动量决定了能不能上抖音热门持续推流。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>完整看完再点赞</h4>
+        <p>别秒赞秒走，完整播放才算有效播放，看完再点赞评论转发。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>评论要写高质内容</h4>
+        <p>评论别只发表情包，写两句有实质内容的真实感受，帮视频增加互动权重。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>每日送免费小花</h4>
+        <p>每个账号每日可以对王奕本人的视频送出三朵免费小花，助力视频推流，不要忘记！</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>直播间互动</h4>
+        <p>点赞、发送弹幕、送出人气票等行为可以帮助提升直播间互动数据，账号越容易推上热门。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>抄作业区</div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">视频评论</span>
+          <span class="copy-item-name">视频</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">这个视频太上头了反复看了十遍，oneone状态也太好了吧。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">直播弹幕</span>
+          <span class="copy-item-name">直播</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">oneone今天好好看！唱得好听！想听XX！</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">转发文案</span>
+          <span class="copy-item-name">转发</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">快来看oneone的新视频太绝了，评论区集合！</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span>避坑指南</div>
+
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">视频别秒赞秒走，完整播放才算有效播放，秒走会拉低完播率。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">视频每日送花量力而行，免费的三朵小花送完就可以，不要过度攀比。</div>
+    </div>
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">视频短时间内不要大批量刷屏或复制一模一样的模板评论，否则会限制推流。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">评论别带别家艺人名字，容易引战。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span>小汽水们问最多的</div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        视频送花要花钱吗？
+      </div>
+      <div class="faq-a">
+        抖音每天有三朵免费小花，剩下的需要花钱买，免费的花每天送完就行，花钱的花量力而行不要勉强。
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        怎么帮视频上热门？
+      </div>
+      <div class="faq-a">
+        完整播放+点赞+评论+转发+送花五件套做完就有基础热度，前2小时的互动量最关键，越早做数据越容易上热门。
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🌟</span>过来人碎碎念</div>
+
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>不要用刚注册的空白新号大批量做数据，养几天正常刷视频再参与互动。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>不要长时间挂着直播间黑屏挂机，真实停留需要偶尔切换弹幕、轻微操作。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== XHS PAGE ========== -->
+<div class="page" id="page-xhs">
+  <div class="back-btn" onclick="showPage('home')">← 返回首页</div>
+  <div class="detail-header">
+    <div class="detail-icon icon-violet">红</div>
+    <div class="detail-title">小红书数据</div>
+  </div>
+  <div class="detail-intro">小红书数据主要有浏览量、完读情况、点赞、评论、收藏、转发，还有涨粉数据；收藏转发权重更高，完整浏览后互动效果更佳。</div>
+  <div class="tag-row">
+    <span class="tag tag-purple">小红书</span>
+    <span class="tag tag-purple">笔记</span>
+    <span class="tag tag-purple">收藏</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>这有啥用</div>
+    <div class="info-box info-box-purple">
+      oneone发了小红书笔记后，点赞收藏评论越多越容易被平台推荐给更多非粉丝用户看到，是安利出圈的好渠道。小红书推荐机制最看重收藏量，所以收藏一定要点。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span>手把手教</div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">1</div>
+      <div class="step-content">
+        <h4>关注oneone账号</h4>
+        <p>先在小红书关注oneone的账号（王奕好朋友），发布笔记后第一时间就可以看到。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">2</div>
+      <div class="step-content">
+        <h4>三连做数据</h4>
+        <p>oneone发笔记后赶紧去点赞+收藏+评论三连，收藏比点赞更重要，小红书最看重收藏量。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">3</div>
+      <div class="step-content">
+        <h4>完整看完再互动</h4>
+        <p>别秒赞秒收藏，先把笔记完整看完再互动，秒操作会被判定机器人。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">4</div>
+      <div class="step-content">
+        <h4>评论走心</h4>
+        <p>评论别只发表情包，写两句走心的，15字以上不容易被折叠。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">5</div>
+      <div class="step-content">
+        <h4>转发扩散</h4>
+        <p>好的笔记可以转发到朋友圈或者其他平台，帮oneone的内容扩散给更多人。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">6</div>
+      <div class="step-content">
+        <h4>前2小时最关键</h4>
+        <p>笔记发布后2小时内的互动量决定能不能上热门，越早做数据越好。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>抄作业区</div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag violet">短评论</span>
+          <span class="copy-item-name">短评</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">oneone太好看了！这个造型绝了！</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag violet">长评论</span>
+          <span class="copy-item-name">长评</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">这个造型真的绝，发型妆容都很搭，拍出来质感太好了，已经收藏了反复看。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag violet">互动向</span>
+          <span class="copy-item-name">互动</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">小汽水们觉得这套图最好看的是哪张？我觉得第三张绝了。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span>避坑指南</div>
+
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">别刷数据别用软件，小红书查得严，查到了限流封号。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">别秒赞秒收藏，先看完笔记再互动，秒操作会被判定机器人。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">评论别太短会被折叠，写两句有内容的，15字以上最好。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">别在评论区引战拉踩别家，会被举报删除。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">最好发布15字以上高质量评论，不要无意义水评，容易导致账号被限流。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span>小汽水们问最多的</div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        笔记怎么上热门？
+      </div>
+      <div class="faq-a">
+        前2小时的互动量最关键，oneone发笔记后第一时间去做数据。收藏量比点赞量更重要，所以收藏一定要点。评论走心一点，有评论的笔记比没评论的更容易被推荐。
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        收藏和点赞哪个更重要？
+      </div>
+      <div class="faq-a">
+        收藏更重要。小红书推荐机制最看重收藏量，有收藏说明内容值得反复看，平台会给更多推荐。所以点赞+收藏+评论三连一定要做齐。
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🌟</span>过来人碎碎念</div>
+
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>小红书的推荐机制看重收藏量——给oneone笔记做数据时收藏一定要点，收藏比点赞更重要。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>oneone发笔记后前2小时的互动量决定能不能上热门——第一时间去做数据最管用，越早越好。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>收藏>转发>评论>点赞，收藏是最容易被大家忽略的高权重指标！</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>不要全部使用一模一样的评论，每条发言措辞要有区分。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== QIANDAO PAGE ========== -->
+<div class="page" id="page-qiandao">
+  <div class="back-btn" onclick="showPage('home')">← 返回首页</div>
+  <div class="detail-header">
+    <div class="detail-icon icon-violet">签</div>
+    <div class="detail-title">超话签到</div>
+  </div>
+  <div class="detail-intro">每日进入王奕超话主页，点击右上角「签到」标签即为签到打卡成功。</div>
+  <div class="tag-row">
+    <span class="tag tag-purple">超话</span>
+    <span class="tag tag-purple">签到</span>
+    <span class="tag tag-purple">等级</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>这有啥用</div>
+    <div class="info-box info-box-purple">
+      超话每日签到可以获得超话经验、提高超话活跃度，活人签到数量是艺人活粉数据的重要参考标准。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span>手把手教</div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">1</div>
+      <div class="step-content">
+        <h4>注意签到时间</h4>
+        <p>每日优先8-23点这一时间段内签到，凌晨打卡容易被系统吞掉热度，且会伤害账号权重。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">2</div>
+      <div class="step-content">
+        <h4>选择签到状态</h4>
+        <p>签到状态是超话附加任务，签到以后挑选专属标签、点击+1提交；它可以额外统计活跃粉数量，提升超话活跃度数据。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">3</div>
+      <div class="step-content">
+        <h4>尽量不要断签</h4>
+        <p>连续签到越久单次经验越高，断签后连续天数清零；不要频繁使用补签卡。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-purple">4</div>
+      <div class="step-content">
+        <h4>搭配其他任务</h4>
+        <p>签到只是基础，搭配浏览、互动帖子任务，才可保住超like头衔，单一签到收益很低。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>抄作业区</div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag violet">签到</span>
+          <span class="copy-item-name">签到</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">今日签到，连续第30天，今天oneone的图太好看了！</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag violet">签到+安利</span>
+          <span class="copy-item-name">签到+安利</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">签到+安利一首oneone的XX歌，副歌太上头了。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span>避坑指南</div>
+
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">只签到不选标签不计入状态活跃人数；已经签到完毕，也能在签到日历内补上状态选择！</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">签到结束之后简单浏览几条帖子，单纯打卡便退出，属于低质量活跃。</div>
+    </div>
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">尽量不要断签，否则连续签到加成会清零。</div>
+    </div>
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">别凌晨卡点签到！每晚23:30到次日早上7:00这个时间段禁止签到，容易不计入超话热度！</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span>小汽水们问最多的</div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        断签怎么办？
+      </div>
+      <div class="faq-a">
+        开通微博会员每月可获取一张超话补签卡，但仅能够补上近30天之内漏签的日子。
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        每日具体签到时间段是什么？
+      </div>
+      <div class="faq-a">
+        最佳签到时间：8:00-23:00；禁止签到时间：23:30-6:00。
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🌟</span>过来人碎碎念</div>
+
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>签到状态是官方新增的活粉参考指标，对外展示粉丝活跃度，利于超话榜单热度。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>可以每天设个闹钟提醒自己签到，靠脑子记容易忘。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== HUATI PAGE ========== -->
+<div class="page" id="page-huati">
+  <div class="back-btn" onclick="showPage('home')">← 返回首页</div>
+  <div class="detail-header">
+    <div class="detail-icon icon-deeporange">话</div>
+    <div class="detail-title">话题建设</div>
+  </div>
+  <div class="detail-intro">话题建设就是粉丝带词条发原创博文，产出安利、物料、感想，提升词条阅读、讨论量，优化词条氛围，拉高艺人话题热度与路人曝光。</div>
+  <div class="tag-row">
+    <span class="tag tag-orange">话题</span>
+    <span class="tag tag-orange">阅读量</span>
+    <span class="tag tag-orange">热搜</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>这有啥用</div>
+    <div class="info-box info-box-orange">
+      话题阅读越高，平台越容易推送词条至推荐位乃至热搜，收获更多路人浏览。每当oneone更新日常、排练或是演出物料，大家带上对应词条带图发文，便可拉高话题活跃度。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span>手把手教</div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">1</div>
+      <div class="step-content">
+        <h4>发博带上标准词条</h4>
+        <p>发布微博请使用固定词条内容，沿用官方标签，不要自创话题名称。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">2</div>
+      <div class="step-content">
+        <h4>转发同步附带话题</h4>
+        <p>在转发王奕相关动态、物料时，一并带上对应词条增加话题活跃度。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">3</div>
+      <div class="step-content">
+        <h4>合理搭配关联词条</h4>
+        <p>优质博文可搭配相关辅助话题，例如#王奕##盛世美颜王奕#，词条数量控制在2个及以内。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">4</div>
+      <div class="step-content">
+        <h4>抓住黄金时段发博</h4>
+        <p>每当王奕更新日常、排练或是演出物料时，大家可以配合数据组的指示带上词条发文，助推话题热度上涨。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num step-num-orange">5</div>
+      <div class="step-content">
+        <h4>产出高质量正文</h4>
+        <p>不可只堆砌话题标签，拒绝空洞水帖，博文要配上走心原创内容，提升词条权重。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>抄作业区</div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag">话题格式</span>
+          <span class="copy-item-name">格式</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">#王奕# 今天的日常太可爱了笑死，排练花絮也好看。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag">多话题</span>
+          <span class="copy-item-name">多话题</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">#王奕# #偶像安利# 这个舞台绝了，推荐大家看。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag">转发带话题</span>
+          <span class="copy-item-name">转发</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">转发时添加#王奕#话题标签再写两句评论。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span>避坑指南</div>
+
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">辅助话题尽量挑选贴合内容的，不要堆砌毫无关联的标签。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">转发动态时，辅助话题尽量更换搭配，不要每次转发都照搬一模一样的话题组合。</div>
+    </div>
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">不要频繁重复删除、重发带话题的博文，频繁删博会降低账号权重。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">少用大批量纯转发冲热度，原创博文对于话题建设权重更高。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span>小汽水们问最多的</div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        话题阅读量怎么涨？
+      </div>
+      <div class="faq-a">
+        话题数据由带话题博文的浏览量累积而成。平时多发带上词条的优质原创博文；冲击热搜阶段大家可以根据数据组指示同步发文、集中发力。
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        为什么要控制话题数量？
+      </div>
+      <div class="faq-a">
+        发布的内容中带有两个话题，那么该单条内容的阅读量会平均分给两个话题。带两个以上的话题词会影响贡献度和阅读量，所以最多带两个话题词为佳。
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🌟</span>过来人碎碎念</div>
+
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>「冲原创量」意思是号召粉丝大量发布带指定词条的原创微博，以提升话题在热搜榜的排名或达成活动目标。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>发原创帖要求正文15字以上带话题词条，配图或视频更佳，不能发纯水帖。</div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  王奕数据组 · 数据小课堂
+</div>
+
+</div>
+
+<script>
+  // Page switching
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + pageId).classList.add('active');
+    
+    const breadcrumb = document.getElementById('breadcrumb');
+    const crumbName = document.getElementById('crumb-name');
+    
+    if (pageId === 'home') {
+      breadcrumb.classList.remove('active');
+    } else {
+      breadcrumb.classList.add('active');
+      const names = {
+        'chaolike': '超like',
+        'kongping': '控评',
+        'zengping': '增评',
+        'lunbo': '轮博',
+        'fatie': '发帖',
+        'douyin': '抖音数据',
+        'xhs': '小红书数据',
+        'qiandao': '超话签到',
+        'huati': '话题建设'
+      };
+      crumbName.textContent = names[pageId] || '';
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Toggle copy items
+  function toggleCopy(el) {
+    const body = el.nextElementSibling;
+    const arrow = el.querySelector('.copy-item-arrow');
+    if (body.style.display === 'none' || !body.style.display) {
+      body.style.display = 'block';
+      arrow.textContent = '▲';
+    } else {
+      body.style.display = 'none';
+      arrow.textContent = '▼';
+    }
+  }
+
+  // Toggle FAQ
+  function toggleFaq(el) {
+    el.classList.toggle('open');
+  }
+
+  // Initialize: close all copy bodies (show first ones expanded by default)
+  document.addEventListener('DOMContentLoaded', function() {
+    // Keep copy items expanded by default as shown in screenshots
+    // FAQ items collapsed by default
+  });
+</script>
+
+</body>
+</html>
