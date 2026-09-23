@@ -496,6 +496,15 @@
     <div class="module-arrow">→</div>
   </div>
 
+  <div class="module-card" onclick="showPage('douyin')">
+    <div class="module-icon icon-red">抖</div>
+    <div class="module-info">
+      <div class="module-title">抖音数据</div>
+      <div class="module-desc">抖音数据包含播放、点赞、评论、转发、粉丝等指标，用来衡量账号热度、流量规模与粉丝活跃度。</div>
+    </div>
+    <div class="module-arrow">→</div>
+  </div>
+
   <div class="module-card" onclick="showPage('xhs')">
     <div class="module-icon icon-violet">红</div>
     <div class="module-info">
@@ -1295,6 +1304,155 @@
   </div>
 </div>
 
+<!-- ========== DOUYIN PAGE ========== -->
+<div class="page" id="page-douyin">
+  <div class="back-btn" onclick="showPage('home')">← 返回首页</div>
+  <div class="detail-header">
+    <div class="detail-icon icon-red">抖</div>
+    <div class="detail-title">抖音数据</div>
+  </div>
+  <div class="detail-intro">抖音数据包含播放、点赞、评论、转发、粉丝等指标，用来衡量账号热度、流量规模与粉丝活跃度。</div>
+  <div class="tag-row">
+    <span class="tag">抖音</span>
+    <span class="tag">直播</span>
+    <span class="tag">视频互动</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>这有啥用</div>
+    <div class="info-box">
+      抖音视频的互动量越高越容易被推上热门，曝光随之上涨；直播间的点赞、人气票和弹幕能增加直播间热度，平台会推送更多流量给到直播间。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span>手把手教</div>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>视频互动</h4>
+        <p>oneone发抖音视频后需要点赞、评论、转发一键三连，前2小时的互动量决定了能不能上抖音热门持续推流。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>完整看完再点赞</h4>
+        <p>别秒赞秒走，完整播放才算有效播放，看完再点赞评论转发。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>评论要写高质内容</h4>
+        <p>评论别只发表情包，写两句有实质内容的真实感受，帮视频增加互动权重。</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>直播间互动</h4>
+        <p>点赞、发送弹幕、送出人气票等行为可以帮助提升直播间互动数据，账号越容易推上热门。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>抄作业区</div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">视频评论</span>
+          <span class="copy-item-name">视频</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">这个视频太上头了反复看了十遍，oneone状态也太好了吧。</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">直播弹幕</span>
+          <span class="copy-item-name">直播</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">oneone今天好好看！唱得好听！想听XX！</div>
+    </div>
+
+    <div class="copy-group">
+      <div class="copy-item-header" onclick="toggleCopy(this)">
+        <div class="copy-item-label">
+          <span class="copy-item-tag red">转发文案</span>
+          <span class="copy-item-name">转发</span>
+        </div>
+        <span class="copy-item-arrow">▼</span>
+      </div>
+      <div class="copy-item-body">快来看oneone的新视频太绝了，评论区集合！</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span>避坑指南</div>
+
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">视频别秒赞秒走，完整播放才算有效播放，秒走会拉低完播率。</div>
+    </div>
+    <div class="tip-card danger">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">视频短时间内不要大批量刷屏或复制一模一样的模板评论，否则会限制推流。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-text">评论别带别家艺人名字，容易引战。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span>小汽水们问最多的</div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        怎么帮视频上热门？
+      </div>
+      <div class="faq-a">
+        完整播放+点赞+评论+转发四件套做完就有基础热度，前2小时的互动量最关键，越早做数据越容易上热门。
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        直播间怎么做数据？
+      </div>
+      <div class="faq-a">
+        真实停留看完直播，多点赞、发弹幕互动，有人气票活动时送出人气票，直播间互动数据越高越容易被推流。
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🌟</span>过来人碎碎念</div>
+
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>不要用刚注册的空白新号大批量做数据，养几天正常刷视频再参与互动。</div>
+    </div>
+    <div class="murmur-card">
+      <div class="murmur-icon">›</div>
+      <div>不要长时间挂着直播间黑屏挂机，真实停留需要偶尔切换弹幕、轻微操作。</div>
+    </div>
+  </div>
+</div>
+
   <div class="tag-row">
     <span class="tag tag-purple">小红书</span>
     <span class="tag tag-purple">笔记</span>
@@ -1797,6 +1955,7 @@
         'zengping': '增评',
         'lunbo': '轮博',
         'fatie': '发帖',
+        'douyin': '抖音数据',
         'xhs': '小红书数据',
         'qiandao': '超话签到',
         'huati': '话题建设'
